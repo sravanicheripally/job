@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Welcome to JobPilot.ai{% endblock %}
+
+{% block content %}
+<style>
+    .hero {
+    background: #f0f4f8;
+}
+
+.features h4 {
+    font-weight: 600;
+    margin-top: 15px;
+}
+
+.features p {
+    color: #555;
+}
+
+.cta {
+    background: #e6f2ff;
+}
+
+</style>
+<!-- Hero Section -->
+<section class="hero text-center py-5" style="background-color: #f0f4f8;">
+  <div class="container">
+    <h1 class="display-4 fw-bold">Empowering Your Career Journey with AI</h1>
+    <p class="lead mt-3">JobPilot.ai helps you find the right jobs faster with intelligent tools, insights, and support.</p>
+    <a href="{% url 'signup' %}" class="btn btn-primary btn-lg mt-4">Get Started for Free</a>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="features py-5 bg-white">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-md-4 mb-4">
+        <img src="{% static 'Images/ai-search.svg' %}" alt="AI Matching" width="60">
+        <h4 class="mt-3">AI Job Matching</h4>
+        <p>Discover jobs tailored to your profile using smart algorithms.</p>
+      </div>
+      <div class="col-md-4 mb-4">
+        <img src="{% static 'Images/interview.svg' %}" alt="Interview Tools" width="60">
+        <h4 class="mt-3">Mock Interviews</h4>
+        <p>Practice interviews with real-time feedback and boost your confidence.</p>
+      </div>
+      <div class="col-md-4 mb-4">
+        <img src="{% static 'Images/mentor.svg' %}" alt="Mentor Support" width="60">
+        <h4 class="mt-3">Mentor Support</h4>
+        <p>Get guidance from industry experts to accelerate your career growth.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta text-center py-5" style="background-color: #e6f2ff;">
+  <div class="container">
+    <h2 class="fw-semibold">Ready to land your dream job?</h2>
+    <p class="mb-4">Join thousands of successful job seekers who trust JobPilot.ai.</p>
+    <a href="{% url 'plans' %}" class="btn btn-success btn-lg">View Subscription Plans</a>
+  </div>
+</section>
+
+{% endblock %}

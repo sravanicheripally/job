@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Filtered User Data | JobPilot.ai{% endblock %}
+
+{% block content %}
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f1f4f9;
+    margin: 0;
+    padding: 20px;
+  }
+
+  .metrics {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+  }
+
+  .metric-box {
+    flex: 1;
+    margin: 0 10px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 20px;
+  }
+
+  .metric-box h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #666;
+  }
+
+  .metric-box p {
+    font-size: 24px;
+    font-weight: bold;
+    color: #222;
+  }
+
+  .filter-buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+    gap: 10px;
+  }
+
+  .filter-buttons a {
+    padding: 10px 30px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #333;
+    background: #fff;
+    transition: 0.3s ease;
+  }
+
+  .filter-buttons a.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+  }
+
+  .records {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th, td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+  }
+
+  th {
+    background-color: #007bff;
+    color: white;
+  }
+
+  .no-data {
+    text-align: center;
+    font-weight: 500;
+    color: #666;
+    padding: 40px 0;
+  }
+
+  h2.page-title {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+  }
+</style>
+
+<h2 class="page-title">Applied Jobs</h2>
+
+<!-- Metrics Section -->
+<div class="metrics">
+  <div class="metric-box">
+    <h3>Today</h3>
+    <p>{{ today_count }}</p>
+  </div>
+  <div class="metric-box">
+    <h3>This Week</h3>
+    <p>{{ week_count }}</p>
+  </div>
+  <div class="metric-box">
+    <h3>This Month</h3>
+    <p>{{ month_count }}</p>
+  </div>
+</div>
+
+<!-- Filter Buttons -->
+<div class="filter-buttons">
+  <a href="?filter=day" class="{% if selected_filter == 'day' %}active{% endif %}">Today</a>
+  <a href="?filter=week" class="{% if selected_filter == 'week' %}active{% endif %}">This Week</a>
+  <a href="?filter=month" class="{% if selected_filter == 'month' %}active{% endif %}">This Month</a>
+</div>
+
+<!-- Records Table -->
+<div class="records">
+  {% if records %}
+    <table>
+      <thead>
+        <tr>
+          {% for header in records.0.keys %}
+            <th>{{ header|title }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in records %}
+          <tr>
+            {% for val in row.values %}
+              <td>{{ val }}</td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <div class="no-data">No data available for this filter.</div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,216 @@
+{% extends 'base.html' %}
+{% block title %}Subscription Plans{% endblock %}
+
+{% block content %}
+<!-- Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden; /* Hide outer scrollbar */
+        font-family: 'Segoe UI', sans-serif;
+        background: url('https://images.unsplash.com/photo-1605902711622-cfb43c44367d?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+        background-size: cover;
+    }
+
+    .plans-wrapper {
+        background-color: rgba(255, 255, 255, 0.88);
+        margin: 0 auto;
+        padding: 20px;
+        border-radius: 15px;
+        max-width: 1200px;
+        height: 100vh; /* Take full screen */
+        overflow-y: auto; /* Scroll only the content */
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 30px;
+    }
+
+    .plan-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 16px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        width: 320px;
+        padding: 30px 25px;
+        text-align: center;
+        position: relative;
+        transition: transform 0.3s ease;
+    }
+
+    .plan-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .badge {
+        position: absolute;
+        top: 20px;
+        left: -10px;
+        transform: rotate(-45deg);
+        background-color: #ff4f72;
+        color: white;
+        padding: 6px 20px;
+        font-size: 12px;
+        font-weight: bold;
+        border-radius: 4px;
+    }
+
+    .badge.standard { background: #2dd2a8; }
+    .badge.pro { background: #5a32a3; }
+
+    .price {
+        font-size: 32px;
+        color: #333;
+        font-weight: 700;
+        margin-top: 30px;
+    }
+
+    .period {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 20px;
+    }
+
+    .features {
+        list-style: none;
+        padding: 0;
+        text-align: left;
+        margin-top: 20px;
+        font-size: 15px;
+        line-height: 1.6;
+        min-height: 180px;
+    }
+
+    .features li {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .features i {
+        color: #4caf50;
+        width: 20px;
+        text-align: center;
+    }
+
+    .features li.disabled {
+        color: #bbb;
+        text-decoration: line-through;
+    }
+
+    .features li.disabled i {
+        color: #bbb;
+    }
+
+    .btn-subscribe {
+        background-color: #ff4f72;
+        color: white;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 25px;
+        font-weight: 600;
+        margin-top: 20px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        width: 100%;
+    }
+
+    .btn-subscribe.standard { background-color: #2dd2a8; }
+    .btn-subscribe.pro { background-color: #5a32a3; }
+
+    .btn-subscribe:hover {
+        opacity: 0.9;
+    }
+</style>
+
+<div class="plans-wrapper">
+    <!-- BASIC PLAN -->
+    <div class="plan-card">
+        <div class="badge"><i class="fas fa-seedling"></i> BASIC</div>
+        <div class="price">$5</div>
+        <div class="period">per month</div>
+        <ul class="features">
+            <li><i class="fas fa-paper-plane"></i> Apply to 10 Jobs / Month</li>
+            <li><i class="fas fa-file-alt"></i> Basic Resume Builder</li>
+            <li><i class="fas fa-envelope"></i> Email Job Alerts</li>
+            <li class="disabled"><i class="fas fa-user-check"></i> Resume Review by Experts</li>
+            <li class="disabled"><i class="fas fa-headset"></i> Priority Support</li>
+        </ul>
+        <button class="btn-subscribe" onclick="startPayment('basic')">Subscribe</button>
+    </div>
+
+    <!-- STANDARD PLAN -->
+    <div class="plan-card">
+        <div class="badge standard"><i class="fas fa-rocket"></i> STANDARD</div>
+        <div class="price">$15</div>
+        <div class="period">per month</div>
+        <ul class="features">
+            <li><i class="fas fa-infinity"></i> Unlimited Applications</li>
+            <li><i class="fas fa-file-signature"></i> Resume Templates</li>
+            <li><i class="fas fa-user-check"></i> Resume Review</li>
+            <li><i class="fas fa-sms"></i> Email + SMS Alerts</li>
+            <li class="disabled"><i class="fas fa-star"></i> Featured Candidate</li>
+        </ul>
+        <button class="btn-subscribe standard" onclick="startPayment('standard')">Subscribe</button>
+    </div>
+
+    <!-- PRO PLAN -->
+    <div class="plan-card">
+        <div class="badge pro"><i class="fas fa-crown"></i> PRO</div>
+        <div class="price">$25</div>
+        <div class="period">per month</div>
+        <ul class="features">
+            <li><i class="fas fa-check-circle"></i> All Standard Features</li>
+            <li><i class="fas fa-star"></i> Featured Candidate Badge</li>
+            <li><i class="fas fa-user-tie"></i> 1-on-1 Career Counseling</li>
+            <li><i class="fas fa-headset"></i> Priority Support</li>
+            <li><i class="fas fa-robot"></i> AI Job Matching</li>
+        </ul>
+        <button class="btn-subscribe pro" onclick="startPayment('pro')">Subscribe</button>
+    </div>
+</div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    function startPayment(plan) {
+        const planAmounts = {
+            basic: 500,
+            standard: 1500,
+            pro: 2500
+        };
+
+        const planNames = {
+            basic: 'Basic Plan',
+            standard: 'Standard Plan',
+            pro: 'Pro Plan'
+        };
+
+        var options = {
+            "key": "{{ razorpay_key|default:'rzp_test_Anl5NixDMZZiL0' }}",
+            "amount": planAmounts[plan],
+            "currency": "INR",
+            "name": "JobApply Platform",
+            "description": planNames[plan],
+            "handler": function (response) {
+                alert("Payment successful! Payment ID: " + response.razorpay_payment_id);
+                window.location.href = "{% url 'home' %}";
+            },
+            "prefill": {
+                "name": "{{ user.get_full_name|default:'John Doe' }}",
+                "email": "{{ user.email|default:'john@example.com' }}"
+            },
+            "theme": {
+                "color": plan === 'basic' ? '#ff4f72' : (plan === 'standard' ? '#2dd2a8' : '#5a32a3')
+            }
+        };
+
+        var rzp = new Razorpay(options);
+        rzp.open();
+    }
+</script>
+{% endblock %}

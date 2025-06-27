@@ -1,0 +1,74 @@
+.apply-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+  }
+  
+  .form-box {
+    background: #ffffff;
+    padding: 30px 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+  }
+  
+  .header h2 {
+    font-size: 24px;
+    color: #2b8c8c;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .header p {
+    text-align: center;
+    color: #777;
+    margin-bottom: 25px;
+    font-size: 14px;
+  }
+  
+  form label {
+    font-weight: 500;
+    color: #444;
+    margin-top: 12px;
+    display: block;
+  }
+  
+  form input,
+  form select,
+  form textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+  
+  form input[type="file"] {
+    padding: 5px;
+  }
+  
+  .submit-btn {
+    width: 100%;
+    background-color: #2bb3b3;
+    color: white;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    transition: 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .submit-btn:hover {
+    background-color: #249797;
+  }
+  
+  .success {
+    color: green;
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: 500;
+  }

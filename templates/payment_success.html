@@ -1,0 +1,24 @@
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    var options = {
+        "key": "{{ razorpay_key }}",
+        "amount": "{{ amount }}",
+        "currency": "INR",
+        "name": "Your Company",
+        "description": "Subscription Payment",
+        "order_id": "{{ order_id }}",
+        "handler": function (response) {
+            alert('Payment Successful!');
+            window.location.href = "{% url 'home' %}";
+        },
+        "prefill": {
+            "name": "{{ user.get_full_name }}",
+            "email": "{{ user.email }}"
+        },
+        "theme": {
+            "color": "#7145d6"
+        }
+    };
+    var rzp = new Razorpay(options);
+    rzp.open();
+</script>

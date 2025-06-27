@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% block title %}Signup{% endblock %}
+{% load static %}
+
+{% block content %}
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-image: url("{% static 'Images/signup.png' %}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        min-height: 100vh;
+    }
+
+    .signup-wrapper-fixed {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+    }
+
+    .signup-box {
+        background: white;
+        padding: 20px 20px 15px 20px; /* tighter padding */
+        border-radius: 20px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 360px;
+        z-index: 10;
+        margin-bottom:10%;
+    }
+
+    .form-title {
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 15px;
+        font-size: 1.2rem;
+    }
+
+    .form-label {
+        font-size: 0.85rem;
+        color: #444;
+        font-weight: 500;
+        margin-bottom: 4px;
+    }
+
+    .form-control {
+        font-size: 0.85rem;
+        height: 36px;
+        border-radius: 8px;
+        padding: 6px 12px;
+    }
+
+    .btn-submit {
+        background-color: #3dd5c6;
+        color: white;
+        font-weight: 600;
+        height: 38px;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+        font-size: 0.9rem;
+    }
+
+    .btn-submit:hover {
+        background-color: #35c3b8;
+    }
+
+    .form-check-label {
+        font-size: 0.8rem;
+    }
+
+    .auth-footer {
+        font-size: 0.8rem;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .auth-footer a {
+        color: #3dd5c6;
+        text-decoration: none;
+    }
+
+    .forgot-password {
+        font-size: 0.75rem;
+        float: right;
+        margin-top: -4px;
+    }
+
+    .mb-3 {
+        margin-bottom: 12px !important;
+    }
+</style>
+
+<div class="signup-wrapper-fixed">
+    <div class="signup-box">
+        <h4 class="form-title">Create Your Account ✨</h4>
+        <form method="post" novalidate>
+            {% csrf_token %}
+          {% for field in form %}
+    <div class="mb-3">
+        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+        <input 
+            type="{{ field.field.widget.input_type }}" 
+            name="{{ field.name }}"
+            id="{{ field.id_for_label }}"
+            class="form-control {% if field.errors %}is-invalid{% endif %}" 
+            value="{{ field.value|default_if_none:'' }}" 
+            {% if field.field.required %}required{% endif %}
+        />
+        {% if field.errors %}
+            <div class="invalid-feedback">{{ field.errors|striptags }}</div>
+        {% endif %}
+    </div>
+{% endfor %}
+
+
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" value="" id="remember">
+                <label class="form-check-label" for="remember">Remember me</label>
+                <a href="#" class="forgot-password">Forgot Password</a>
+            </div>
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-submit">SUBMIT</button>
+            </div>
+        </form>
+
+        <div class="auth-footer">
+            Already have an account? <a href="{% url 'login' %}">Log In</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

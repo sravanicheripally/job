@@ -1,0 +1,2 @@
+# Treat all SVG files as text and enforce LF line endings
+*.svg text eol=lf

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-primary">Jobs Matching Your Skills</h2>
+
+    {% if matching_jobs %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Job Title</th>
+                        <th scope="col">Company</th>
+                        <th scope="col">Technologies</th>
+                        <th scope="col">Posted On</th>
+                        <th scope="col">Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for job in matching_jobs %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ job.job_title }}</td>
+                            <td>{{ job.company_name }}</td>
+                            <td>
+                                {% for tech in job.technologies.all %}
+                                    <span class="badge bg-info text-dark me-1">{{ tech.name }}</span>
+                                {% endfor %}
+                            </td>
+                            <td>{{ job.created_at|date:"M d, Y" }}</td>
+                            <td>
+                                <a href="{{ job.job_link }}" target="_blank" class="btn btn-sm btn-primary">
+                                    View
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-warning" role="alert">
+            No matching jobs found for your selected technologies.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
