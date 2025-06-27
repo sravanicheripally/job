@@ -1,0 +1,12 @@
+jobenv/
+__pycache__/
+*.pyc
+*.pyo
+*.so
+*.sqlite3
+*.pkl
+*.pt
+*.log
+media/
+staticfiles/
+*.zip
