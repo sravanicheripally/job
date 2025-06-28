@@ -12,7 +12,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
-import dj_database_url  # If you're using Postgres in future
+import dj_database_url
+from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,7 +21,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY", "insecure-default-key")  # fallback only for dev
 
 # Debug
-DEBUG = os.environ.get("DEBUG", "False").lower() in ["true", "1"]
+# DEBUG = os.environ.get("DEBUG", "False").lower() in ["true", "1"]
+DEBUG=True
 
 # Allowed Hosts
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'job-piolt-ai.onrender.com']
@@ -69,13 +71,21 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'subscription_app.wsgi.application'
 
-# Database: (for now keep SQLite, but allow override via DATABASE_URL if needed)
+# # Database: (for now keep SQLite, but allow override via DATABASE_URL if needed)
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=f'sqlite:///{BASE_DIR / "db.sqlite3"}',
+#         conn_max_age=600
+#     )
+# }
+
 DATABASES = {
     'default': dj_database_url.config(
-        default=f'sqlite:///{BASE_DIR / "db.sqlite3"}',
+        default=config('DATABASE_URL'),
         conn_max_age=600
     )
 }
+
 
 # Password Validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -107,3 +117,4 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/login/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')

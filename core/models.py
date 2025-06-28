@@ -38,15 +38,7 @@ class JobApplier(models.Model):
     def __str__(self):
         return self.user.username
     
-class AppliedJob(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)  # candidate
-    job_link = models.URLField(max_length=500, blank=True, null=True)  # 👈 new field
-    resume = models.FileField(upload_to='resumes/', blank=True, null=True)
-    applied_date = models.DateField(default=timezone.now)
-   
 
-    def __str__(self):
-        return f"{self.user.username} - {self.job_title}"
 
 class JobPosting(models.Model):
     job_title = models.CharField(max_length=100)
@@ -57,3 +49,14 @@ class JobPosting(models.Model):
 
     def __str__(self):
         return f"{self.job_title} at {self.company_name}"
+
+
+class AppliedJob(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    job_posting = models.ForeignKey(JobPosting, on_delete=models.CASCADE, null=True, blank=True)
+    job_link = models.URLField(max_length=500, blank=True, null=True)
+    resume = models.FileField(upload_to='resumes/', blank=True, null=True)
+    applied_date = models.DateField(default=timezone.now)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.job_posting.job_title if self.job_posting else 'Unknown Job'}"

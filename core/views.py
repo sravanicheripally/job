@@ -203,7 +203,12 @@ def get_filtered_jobs(request):
     month_count = AppliedJob.objects.filter(user=user, applied_date__month=today.month, applied_date__year=today.year).count()
 
     # convert queryset to list of dicts for rendering
-    records = list(jobs.values('job_title', 'company', 'applied_date', 'job_link'))
+    records = list(jobs.values(
+        'job_posting__job_title',
+        'job_posting__company_name',
+        'applied_date',
+        'job_link'
+    ))
 
     return render(request, 'filtered_jobs.html', {
         'records': records,
