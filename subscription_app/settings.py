@@ -23,7 +23,8 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "insecure-default-key")  # fallback on
 DEBUG = os.environ.get("DEBUG", "False").lower() in ["true", "1"]
 
 # Allowed Hosts
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "*").split(",")
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'job-piolt-ai.onrender.com']
+
 
 # Application definition
 INSTALLED_APPS = [
