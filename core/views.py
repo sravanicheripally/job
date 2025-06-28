@@ -16,6 +16,10 @@ from django.shortcuts import render
 from django.contrib import messages
 from datetime import date, timedelta
 from datetime import timezone
+import pdfplumber
+import docx
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 
 # Razorpay credentials
@@ -98,6 +102,8 @@ def extract_text_from_docx(file):
     doc = docx.Document(file)
     return "\n".join([para.text for para in doc.paragraphs])
 
+
+
 def parse_resume(text):
     data = {
         'firstname': '',
@@ -107,28 +113,72 @@ def parse_resume(text):
         'description': ''
     }
 
-    # First name & Last name (basic assumption based on first line or email)
     lines = text.strip().split('\n')
-    if lines:
-        name_parts = lines[0].split()
-        if len(name_parts) >= 2:
-            data['firstname'] = name_parts[0]
-            data['lastname'] = name_parts[1]
+    lines = [line.strip() for line in lines if line.strip()]  # remove empty lines
 
-    # Email
+    # --- Extract Email ---
     email_match = re.search(r'[\w\.-]+@[\w\.-]+', text)
     if email_match:
         data['email'] = email_match.group(0)
 
-    # Skills
+    # --- Extract Name (best guess from top lines) ---
+    # Option 1: All uppercase name in first few lines
+    for line in lines[:5]:
+        if re.match(r'^[A-Z]{2,}\s+[A-Z]{2,}$', line):  # e.g., "SRAVANI CHERIPALLY"
+            name_parts = line.strip().split()
+            data['firstname'] = name_parts[0].capitalize()
+            data['lastname'] = name_parts[1].capitalize()
+            break
+
+    # Option 2: Fallback to capitalized words from first line
+    if not data['firstname'] or not data['lastname']:
+        for line in lines[:3]:
+            capitalized_words = re.findall(r'\b[A-Z][a-z]{2,}\b', line)
+            if len(capitalized_words) >= 2:
+                data['firstname'] = capitalized_words[0]
+                data['lastname'] = capitalized_words[1]
+                break
+
+    # Option 3: fallback to name from email
+    if (not data['firstname'] or not data['lastname']) and data['email']:
+        name_part = data['email'].split('@')[0].replace('.', ' ').replace('_', ' ')
+        name_tokens = name_part.split()
+        if len(name_tokens) >= 2:
+            data['firstname'] = data['firstname'] or name_tokens[0].capitalize()
+            data['lastname'] = data['lastname'] or name_tokens[1].capitalize()
+
+    # --- Extract Skills ---
     skill_keywords = ['Python', 'Django', 'React', 'SQL', 'Machine Learning', 'Java', 'C++', 'HTML', 'CSS']
     skills_found = [skill for skill in skill_keywords if skill.lower() in text.lower()]
     data['skills'] = ", ".join(skills_found)
 
-    # Description (just taking first 5 lines as summary)
+    # --- Extract Description (first 5 non-empty lines after name) ---
     data['description'] = "\n".join(lines[1:6])
 
     return data
+
+
+@csrf_exempt
+@login_required
+def parse_resume_api(request):
+    if request.method == 'POST' and request.FILES.get('resume'):
+        resume = request.FILES['resume']
+        text = ""
+        if resume.name.endswith('.pdf'):
+            with pdfplumber.open(resume) as pdf:
+                for page in pdf.pages:
+                    page_text = page.extract_text()
+                    if page_text:
+                        text += page_text + "\n"
+        elif resume.name.endswith('.docx'):
+            doc = docx.Document(resume)
+            text = "\n".join([para.text for para in doc.paragraphs])
+
+        parsed = parse_resume(text)
+        return JsonResponse(parsed)
+
+    return JsonResponse({'error': 'Invalid request'}, status=400)
+
 
 
 @login_required
@@ -154,7 +204,7 @@ def profile_form(request):
             profile.user = request.user
             profile.plan = Plan.objects.last()  # Update as needed
             profile.save()
-            return redirect('home')
+            return redirect('plans')
     else:
         form = StudentProfileForm()
 

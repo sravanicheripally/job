@@ -24,3 +24,5 @@ setuptools>=42
 wheel
 mysqlclient>=2.2.0
 python-decouple
+pdfplumber
+python-docx

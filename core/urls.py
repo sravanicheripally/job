@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
-from .views import job_applier_dashboard,job_dashboard
+from .views import job_applier_dashboard,job_dashboard,parse_resume_api
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -15,5 +15,7 @@ urlpatterns = [
     path('applyJob/', views.applied_job_create, name='applied-job-create'),
     path('filteredJobs/', views.get_filtered_jobs, name='filtered_jobs'),
     path('dashboard/', job_dashboard, name='job_dashboard'),
+    path("api/parse-resume/", parse_resume_api, name="parse-resume-api"),
+
 
 ]
