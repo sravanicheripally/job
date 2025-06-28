@@ -1,12 +1,10 @@
+venv/
 jobenv/
 __pycache__/
 *.pyc
 *.pyo
-*.so
-*.sqlite3
-*.pkl
-*.pt
-*.log
+*.pyd
+db.sqlite3
 media/
 staticfiles/
-*.zip
+.env
