@@ -4,30 +4,56 @@
 
 {% block content %}
 <style>
-    .hero {
-    background: #f0f4f8;
+.hero {
+    background: linear-gradient(135deg, #e0f7fa, #f1f8e9);
+    padding: 80px 0;
+    text-align: center;
 }
 
-.features h4 {
-    font-weight: 600;
-    margin-top: 15px;
+.hero h1 {
+    font-weight: 700;
+    font-size: 3rem;
+    color: #2c3e50;
 }
 
-.features p {
+.hero p {
+    font-size: 1.25rem;
     color: #555;
 }
 
-.cta {
-    background: #e6f2ff;
+.features {
+    padding: 60px 0;
 }
 
+.features h3 {
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+.features p {
+    color: #666;
+}
+
+.cta {
+    background: #e3f2fd;
+    padding: 60px 0;
+    text-align: center;
+}
+
+.cta h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2e7d32;
+}
 </style>
+
+
 <!-- Hero Section -->
-<section class="hero text-center py-5" style="background-color: #f0f4f8;">
+<section class="hero text-center py-5">
   <div class="container">
-    <h1 class="display-4 fw-bold">Empowering Your Career Journey with AI</h1>
-    <p class="lead mt-3">JobPilot.ai helps you find the right jobs faster with intelligent tools, insights, and support.</p>
-    <a href="{% url 'signup' %}" class="btn btn-primary btn-lg mt-4">Get Started for Free</a>
+    <h1 class="display-4 fw-bold">Job Applications Made Easy — With AI</h1>
+    <p class="lead mt-3">Struggling to apply for jobs? JobPilot.ai is your personal job search assistant. We'll help you match, prepare, and apply — effortlessly.</p>
+    <a href="{% url 'signup' %}" class="btn btn-primary btn-lg mt-4">Create Your Profile Now</a>
   </div>
 </section>
 
@@ -37,30 +63,29 @@
     <div class="row text-center">
       <div class="col-md-4 mb-4">
         <img src="{% static 'Images/ai-search.svg' %}" alt="AI Matching" width="60">
-        <h4 class="mt-3">AI Job Matching</h4>
-        <p>Discover jobs tailored to your profile using smart algorithms.</p>
+        <h4 class="mt-3">Smart Job Matching</h4>
+        <p>We analyze your resume and skills to find the most relevant job openings — no endless scrolling required.</p>
       </div>
       <div class="col-md-4 mb-4">
         <img src="{% static 'Images/interview.svg' %}" alt="Interview Tools" width="60">
-        <h4 class="mt-3">Mock Interviews</h4>
-        <p>Practice interviews with real-time feedback and boost your confidence.</p>
+        <h4 class="mt-3">Interview Readiness</h4>
+        <p>Get instant access to mock interviews and personalized feedback so you're always interview-ready.</p>
       </div>
       <div class="col-md-4 mb-4">
         <img src="{% static 'Images/mentor.svg' %}" alt="Mentor Support" width="60">
-        <h4 class="mt-3">Mentor Support</h4>
-        <p>Get guidance from industry experts to accelerate your career growth.</p>
+        <h4 class="mt-3">Human Guidance</h4>
+        <p>Need help? Our experts are here to review your profile, recommend improvements, and keep you motivated.</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- CTA Section -->
-<section class="cta text-center py-5" style="background-color: #e6f2ff;">
+<section class="cta text-center py-5">
   <div class="container">
-    <h2 class="fw-semibold">Ready to land your dream job?</h2>
-    <p class="mb-4">Join thousands of successful job seekers who trust JobPilot.ai.</p>
-    <a href="{% url 'login' %}" class="btn btn-success btn-lg">View Subscription Plans</a>
+    <h2 class="fw-semibold">You don’t need to do this alone.</h2>
+    <p class="mb-4">Let JobPilot.ai be your partner in the job search. Sign up today and take the first step toward a better future.</p>
+    <a href="{% url 'login' %}" class="btn btn-success btn-lg">Explore Plans</a>
   </div>
 </section>
-
 {% endblock %}

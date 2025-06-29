@@ -2,37 +2,55 @@
 {% block title %}Subscription Plans{% endblock %}
 
 {% block content %}
-<!-- Font Awesome CDN -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
     html, body {
-        height: 100%;
         margin: 0;
         padding: 0;
-        overflow: hidden; /* Hide outer scrollbar */
         font-family: 'Segoe UI', sans-serif;
         background: url('https://images.unsplash.com/photo-1605902711622-cfb43c44367d?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
         background-size: cover;
     }
 
     .plans-wrapper {
-        background-color: rgba(255, 255, 255, 0.88);
-        margin: 0 auto;
-        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.92);
+        margin: 40px auto;
+        padding: 30px;
         border-radius: 15px;
         max-width: 1200px;
-        height: 100vh; /* Take full screen */
-        overflow-y: auto; /* Scroll only the content */
         box-sizing: border-box;
         display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+    }
+
+    .intro {
+        text-align: center;
+        max-width: 700px;
+    }
+
+    .intro h2 {
+        font-size: 32px;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+    .intro p {
+        font-size: 16px;
+        color: #555;
+    }
+
+    .plan-container {
+        display: flex;
         gap: 30px;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 
     .plan-card {
-        background: rgba(255, 255, 255, 0.95);
+        background: white;
         border-radius: 16px;
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
         width: 320px;
@@ -129,49 +147,56 @@
 </style>
 
 <div class="plans-wrapper">
-    <!-- BASIC PLAN -->
-    <div class="plan-card">
-        <div class="badge"><i class="fas fa-seedling"></i> BASIC</div>
-        <div class="price">$5</div>
-        <div class="period">per month</div>
-        <ul class="features">
-            <li><i class="fas fa-paper-plane"></i> Apply to 10 Jobs / Month</li>
-            <li><i class="fas fa-file-alt"></i> Basic Resume Builder</li>
-            <li><i class="fas fa-envelope"></i> Email Job Alerts</li>
-            <li class="disabled"><i class="fas fa-user-check"></i> Resume Review by Experts</li>
-            <li class="disabled"><i class="fas fa-headset"></i> Priority Support</li>
-        </ul>
-        <button class="btn-subscribe" onclick="startPayment('basic')">Subscribe</button>
+    <div class="intro">
+        <h2>Choose the Right Plan to Start or Boost Your Job Search</h2>
+        <p>JobPilot.ai is built for those who find job applications confusing, frustrating, or overwhelming. Whether you're starting fresh or want a career push, we’ve got you covered.</p>
     </div>
 
-    <!-- STANDARD PLAN -->
-    <div class="plan-card">
+    <div class="plan-container">
+        <!-- BASIC PLAN -->
+        <div class="plan-card">
+            <div class="badge"><i class="fas fa-seedling"></i> BASIC</div>
+            <div class="price">$250</div>
+            <div class="period">per month</div>
+            <ul class="features">
+                <li><i class="fas fa-paper-plane"></i> Apply to 10 Jobs / Month</li>
+                <li><i class="fas fa-file-alt"></i> Guided Resume Builder</li>
+                <li><i class="fas fa-envelope"></i> Email Job Alerts</li>
+                <li class="disabled"><i class="fas fa-user-check"></i> Expert Resume Review</li>
+                <li class="disabled"><i class="fas fa-headset"></i> Priority Support</li>
+            </ul>
+            <button class="btn-subscribe" onclick="startPayment('basic')">Subscribe</button>
+        </div>
+
+        <div class="plan-card">
         <div class="badge standard"><i class="fas fa-rocket"></i> STANDARD</div>
-        <div class="price">$15</div>
-        <div class="period">per month</div>
+        <div class="price">$150</div>
+        <div class="period">one-time payment</div>
         <ul class="features">
-            <li><i class="fas fa-infinity"></i> Unlimited Applications</li>
-            <li><i class="fas fa-file-signature"></i> Resume Templates</li>
-            <li><i class="fas fa-user-check"></i> Resume Review</li>
-            <li><i class="fas fa-sms"></i> Email + SMS Alerts</li>
-            <li class="disabled"><i class="fas fa-star"></i> Featured Candidate</li>
+            <li><i class="fas fa-file-signature"></i> Professionally Designed Resume</li>
+            <li><i class="fas fa-user-check"></i> Reviewed by Industry Experts</li>
+            <li><i class="fas fa-download"></i> Download in Multiple Formats (PDF/Word)</li>
+            <li><i class="fas fa-envelope-open-text"></i> Email Delivery in 48 Hours</li>
+            <li class="disabled"><i class="fas fa-briefcase"></i> Job Application Support</li>
         </ul>
-        <button class="btn-subscribe standard" onclick="startPayment('standard')">Subscribe</button>
+        <button class="btn-subscribe standard" onclick="startPayment('standard')">Get Resume Now</button>
     </div>
 
-    <!-- PRO PLAN -->
-    <div class="plan-card">
-        <div class="badge pro"><i class="fas fa-crown"></i> PRO</div>
-        <div class="price">$25</div>
-        <div class="period">per month</div>
-        <ul class="features">
-            <li><i class="fas fa-check-circle"></i> All Standard Features</li>
-            <li><i class="fas fa-star"></i> Featured Candidate Badge</li>
-            <li><i class="fas fa-user-tie"></i> 1-on-1 Career Counseling</li>
-            <li><i class="fas fa-headset"></i> Priority Support</li>
-            <li><i class="fas fa-robot"></i> AI Job Matching</li>
-        </ul>
-        <button class="btn-subscribe pro" onclick="startPayment('pro')">Subscribe</button>
+
+        <!-- PRO PLAN -->
+        <div class="plan-card">
+            <div class="badge pro"><i class="fas fa-crown"></i> PRO</div>
+            <div class="price">$300</div>
+            <div class="period">per month</div>
+            <ul class="features">
+                <li><i class="fas fa-check-circle"></i> All Standard Features</li>
+                <li><i class="fas fa-star"></i> Featured Candidate Badge</li>
+                <li><i class="fas fa-user-tie"></i> 1-on-1 Career Counseling</li>
+                <li><i class="fas fa-headset"></i> Priority Support</li>
+                <li><i class="fas fa-robot"></i> AI-based Job Matching</li>
+            </ul>
+            <button class="btn-subscribe pro" onclick="startPayment('pro')">Subscribe</button>
+        </div>
     </div>
 </div>
 
@@ -194,7 +219,7 @@
             "key": "{{ razorpay_key|default:'rzp_test_Anl5NixDMZZiL0' }}",
             "amount": planAmounts[plan],
             "currency": "INR",
-            "name": "JobApply Platform",
+            "name": "JobPilot.ai",
             "description": planNames[plan],
             "handler": function (response) {
                 alert("Payment successful! Payment ID: " + response.razorpay_payment_id);
