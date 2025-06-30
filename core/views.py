@@ -23,8 +23,8 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 # Razorpay credentials
-RAZORPAY_KEY_ID='rzp_test_Anl5NixDMZZiL0'
-RAZORPAY_KEY_SECRET='2fQLWgSjV9PVLJA6ewSSOT6g'
+RAZORPAY_KEY_ID='rzp_test_KcubyV1kaxj5bY'
+RAZORPAY_KEY_SECRET='hKVpAnCTgFf8s48y40K58MWr'
 client = razorpay.Client(auth=(RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET))
 
 def signup(request):
